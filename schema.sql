@@ -12,14 +12,14 @@ CREATE TABLE roles (
     title VARCHAR (30) NOT NULL,
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     dept_id INT,
-    salary INT NOT NULL,
+    salary INT NOT NULL DEFAULT 70000,
     FOREIGN KEY (dept_id)
     REFERENCES department(id)
     ON DELETE SET NULL
 );
 
 CREATE TABLE employees (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR (30) NOT NULL,
     last_name VARCHAR (30) NOT NULL,
     role_id INT,
