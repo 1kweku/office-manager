@@ -42,8 +42,12 @@ const dept = await inquirer.prompt([
     name: 'dept'
     },
 ])
-//console.log(dept.dept);
-db.query(`INSERT INTO department WHERE dept_name = ?`, dept.dept)
+
+db.query(`INSERT INTO department (dept_name) VALUES ('${dept.dept}')`
+, (err, res) => {
+    if (err) throw err;
+    console.log(res);
+})
 }
 
 else if (response.options === "Add a role") {
