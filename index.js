@@ -1,9 +1,10 @@
 const inquirer = require('inquirer');
-const mysql = require('mysql2');
+const mysql = require('mysql');
+
 
 const db = mysql.createConnection(
     {
-      host: '127.0.0.1',
+      host: 'localhost',
       user: 'root',
       password: '',
       database: 'company_db'
@@ -120,3 +121,4 @@ else if (response.options === "Update an employee role") {
 };
 
 questions();
+
