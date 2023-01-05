@@ -1,4 +1,15 @@
 const inquirer = require('inquirer');
+const mysql = require('mysql2');
+
+const db = mysql.createConnection(
+    {
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'company_db'
+    },
+    console.log(`Connected to the company_db database.`)
+  );
 
 const questions = async () => {
     const response = await inquirer.prompt([
@@ -30,6 +41,8 @@ const dept = await inquirer.prompt([
     name: 'dept'
     },
 ])
+//console.log(dept.dept);
+db.query(`INSERT INTO department WHERE dept_name = ?`, dept.dept)
 }
 
 else if (response.options === "Add a role") {
@@ -95,8 +108,8 @@ const salary = await inquirer.prompt([
 const manager = await inquirer.prompt([
     {
     type: 'input',
-    message: 'What is this roles salary?',
-    name: 'roleSalary'
+    message: 'Who is this roles manager?',
+    name: 'manager'
     },
 ])
 }
