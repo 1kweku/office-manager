@@ -28,6 +28,7 @@ if (response.options === "View all departments") {
         if (err) throw err;
         console.table(res);
     })
+questions();
 }
 
 else if (response.options === "View all roles") {
@@ -35,6 +36,7 @@ else if (response.options === "View all roles") {
         if (err) throw err;
         console.table(res);
     })
+questions();
 }
 
 else if (response.options === "View all employees") {
@@ -42,6 +44,7 @@ else if (response.options === "View all employees") {
         if (err) throw err;
         console.table(res);
     })
+questions();
 }
 
 else if (response.options === "Add a department") {
@@ -49,15 +52,16 @@ const dept = await inquirer.prompt([
     {
     type: 'input',
     message: 'Department name?',
-    name: 'dept'
+    name: 'name'
     },
 ])
 
-db.query(`INSERT INTO department (dept_name) VALUES ('${dept.dept}')`
+db.query(`INSERT INTO department (dept_name) VALUES ('${dept.name}')`
 , (err, res) => {
     if (err) throw err;
     console.log(res);
 })
+questions();
 }
 
 else if (response.options === "Add a role") {
@@ -65,57 +69,28 @@ const role = await inquirer.prompt([
     {
     type: 'input',
     message: 'What is the title of this role?',
-    name: 'roleTitle'
+    name: 'title'
     },
 
     {
     type: 'input',
-    message: 'Which the department ID of this role?',
-    name: 'roleID'
+    message: 'Which department does this role belong to?',
+    name: 'department',
     },
     {
     type: 'input',
     message: 'What is this roles salary?',
-    name: 'roleSalary'
+    name: 'salary'
     },
 ])
 
-db.query(`INSERT INTO roles (title, dept_id, salary) VALUES ('${role.roleTitle}', '${role.roleID}', '${role.roleSalary}')`
+db.query(`INSERT INTO roles (title, dept_id, salary) VALUES ('${role.title}', '${role.department}', '${role.salary}')`
 , (err, res) => {
     if (err) throw err;
     console.log(res);
 })
+questions();
 }
-
-// const roleDept = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'Which the department ID of this role?',
-//     name: 'roleDept'
-//     },
-// ])
-
-// db.query(`INSERT INTO roles (dept_id) VALUES ('${roleDept.roleDept}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-
-// const roleSalary = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'What is this roles salary?',
-//     name: 'roleSalary'
-//     },
-// ])
-
-// db.query(`INSERT INTO roles (salary) VALUES ('${roleSalary.roleSalary}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-// }
-
 
 else if (response.options === "Add an employee") {
 const employee = await inquirer.prompt([
@@ -138,9 +113,10 @@ const employee = await inquirer.prompt([
     },
     
     {
-    type: 'input',
+    type: 'list',
     message: 'Which department is this employee under?',
-    name: 'deptID'
+    name: 'dept',
+    choices: ['Engineering', 'Sales', 'Finance', 'Legal', 'Operations']
     },
 
     {
@@ -151,91 +127,38 @@ const employee = await inquirer.prompt([
    
     {
     type: 'input',
-    message: 'Who is this roles manager?',
+    message: 'Who is this employees manager?',
     name: 'manager'
     },
 ])
 
-db.query(`INSERT INTO employees (first_name, last_name, role_id, dept, salary, manager) VALUES ('${employee.firstName}', '${employee.lastName}', '${employee.roleID}', '${employee.deptID}', '${employee.salary}', '${employee.manager}')`
+db.query(`INSERT INTO employees (first_name, last_name, role_id, dept, salary, manager) VALUES ('${employee.firstName}', '${employee.lastName}', '${employee.roleID}', '${employee.dept}', '${employee.salary}', '${employee.manager}')`
 , (err, res) => {
     if (err) throw err;
     console.log(res);
 })
+questions();
 }
-
-// const lastName = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'What is employees last name?',
-//     name: 'lastName'
-//     },
-// ])
-
-// db.query(`INSERT INTO employees (last_name) VALUES ('${lastName.lastName}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-
-// const employeeID = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'What is this employees ID?',
-//     name: 'employeeID'
-//     },
-// ])
-
-// db.query(`INSERT INTO employees (employeeID) VALUES ('${employeeID.employeeID}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-// const employeeDept = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'Which department is this employee under?',
-//     name: 'employeeDept'
-//     },
-// ])
-
-// db.query(`INSERT INTO employees (dept) VALUES ('${employeeDept.employeeDept}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-
-// const salary = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'What is this employees salary?',
-//     name: 'salary'
-//     },
-// ])
-
-// db.query(`INSERT INTO employees (salary) VALUES ('${salary.salary}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-
-// const manager = await inquirer.prompt([
-//     {
-//     type: 'input',
-//     message: 'Who is this roles manager?',
-//     name: 'manager'
-//     },
-// ])
-// db.query(`INSERT INTO employees (manager) VALUES ('${manager.manager}')`
-// , (err, res) => {
-//     if (err) throw err;
-//     console.log(res);
-// })
-// }
 
 else if (response.options === "Update an employee role") {
+    const employeeUpdate = await inquirer.prompt([
+        {
+        type: 'input',
+        message: 'What is this employees ID',
+        name: 'id'
+        },
+        {
+        type: 'list',
+        message: 'What is the emplpyees new role?',
+        name: 'role',
+        choices: ['Sr Engineer', 'Jr Engineer', 'Sales Lead', 'Accountant', 'Lawyer', 'Customer Representative', 'Manager']
+        }
+    ])
 
+db.query(`UPDATE employees SET role_id = ${employeeUpdate.role} WHERE id = ${employeeUpdate.id}`);
 }
 };
+
 
 questions();
 
