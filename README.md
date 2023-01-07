@@ -8,3 +8,5 @@ This application provides an easy way to organize a company's information by col
 
 ## Usage
 Node, inquirer and MYSQL2 are all necessary for full utilization of this applicaiton. After insuring that they are installed on your local device, clone this repository. Use the command "node index" to initialize the app, this wall cause inquirer to begin prompts. 
+
+https://drive.google.com/file/d/1-33oDgCXy6ua-3Wgw-kUXXQB79MAPvdq/view
