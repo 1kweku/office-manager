@@ -10,7 +10,7 @@ const db = mysql.createConnection(
       database: 'company_db',
       
     },
-    console.log(`Connected to the company_db database.`)
+    console.table(`Connected to the company_db database.`)
   );
 
 const questions = async () => {
@@ -59,7 +59,7 @@ const dept = await inquirer.prompt([
 db.query(`INSERT INTO department (dept_name) VALUES ('${dept.name}')`
 , (err, res) => {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
 })
 questions();
 }
@@ -87,7 +87,7 @@ const role = await inquirer.prompt([
 db.query(`INSERT INTO roles (title, dept_id, salary) VALUES ('${role.title}', '${role.department}', '${role.salary}')`
 , (err, res) => {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
 })
 questions();
 }
@@ -135,7 +135,7 @@ const employee = await inquirer.prompt([
 db.query(`INSERT INTO employees (first_name, last_name, role_id, dept, salary, manager) VALUES ('${employee.firstName}', '${employee.lastName}', '${employee.roleID}', '${employee.dept}', '${employee.salary}', '${employee.manager}')`
 , (err, res) => {
     if (err) throw err;
-    console.log(res);
+    console.table(res);
 })
 questions();
 }
