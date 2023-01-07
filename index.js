@@ -148,14 +148,14 @@ else if (response.options === "Update an employee role") {
         name: 'id'
         },
         {
-        type: 'list',
-        message: 'What is the emplpyees new role?',
+        type: 'input',
+        message: 'What is the employees new role?',
         name: 'role',
-        choices: ['Sr Engineer', 'Jr Engineer', 'Sales Lead', 'Accountant', 'Lawyer', 'Customer Representative', 'Manager']
         }
     ])
-
-db.query(`UPDATE employees SET role_id = ${employeeUpdate.role} WHERE id = ${employeeUpdate.id}`);
+const params = [employeeUpdate.role, employeeUpdate.id]
+db.query(`UPDATE employees SET role_id = ? WHERE id = ?`, params);
+questions();
 }
 };
 
